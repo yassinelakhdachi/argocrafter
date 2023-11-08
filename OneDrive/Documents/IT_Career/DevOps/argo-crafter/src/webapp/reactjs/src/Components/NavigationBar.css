@@ -1,0 +1,12 @@
+/* NavigationBar.css */
+
+.nav-link {
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: #FFFFFF;
+    border-color: blue; /* Couleur de la bordure au survol */
+}
