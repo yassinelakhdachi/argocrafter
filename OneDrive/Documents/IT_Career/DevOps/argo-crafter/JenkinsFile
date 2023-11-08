@@ -46,6 +46,27 @@ pipeline {
         }
       }
     }
+
+     stage('Update Deployment File') {
+        environment {
+            GIT_REPO_NAME = "argocrafter"
+            GIT_USER_NAME = "yassinelakhdachi"
+        }
+        steps {
+            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                sh '''
+                    git config user.email "lakhdachiyassine@gmail.com"
+                    git config user.name "yassinelakhdachi"
+                    BUILD_NUMBER=${BUILD_NUMBER}
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" OneDrive/Documents/IT_Career/DevOps/kubernetes-manifests/deployment.yml
+                    git add OneDrive/Documents/IT_Career/DevOps/kubernetes-manifests/deployment.yml
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                '''
+            }
+        }
+
     
+  }
   }
 }
